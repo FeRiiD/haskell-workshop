@@ -7,7 +7,7 @@ main = do
 createField :: Int -> String -> Int -> [(Int, Int)] -> String
 createField number character rowLength coordinates
   | number `mod` rowLength == 0 && number >= rowLength^2   = if(isInCoordinates coordinates number rowLength) then "o" ++ " │\n" else character ++ " │\n"
-  | number `mod` rowLength == 0                            = if(isInCoordinates coordinates number rowLength) then "o" ++ " │\n│" else character ++ " │\n|"
+  | number `mod` rowLength == 0                            = if(isInCoordinates coordinates number rowLength) then "o" ++ " │\n│" else character ++ " │\n│"
   | otherwise                                              = if(isInCoordinates coordinates number rowLength) then "o" else character
 
 integerSqrtFrom :: Int -> Int
@@ -28,21 +28,55 @@ index pos rowSize = fst(pos)*rowSize + snd(pos) + 1
 isInCoordinates :: [(Int, Int)] -> Int -> Int -> Bool
 isInCoordinates coordinates number rowSize = elem number (map(\ x -> index x rowSize) coordinates)
 
--- TODO: create new generation
 nextGeneration :: [(Int,Int)] -> [(Int,Int)]
-nextGeneration oldgeneration = map (\ cell -> nextCell cell oldgeneration ) oldgeneration
+nextGeneration oldgeneration = do
+  let survivors = map (\ cell -> nextCell cell oldgeneration ) oldgeneration
+  let babies = getNewBornsOf oldgeneration
+  babies ++ survivors
+
+getNewBornsOf oldgeneration = do
+  let babyCanditates = nub (concat (map (\ oldCell -> getNeighbourPositions oldCell) oldgeneration))
+  filter (\cand -> getNumberOfNeighbours cand oldgeneration == 3) babyCanditates
+
+nub l                   = nub' l []
+  where
+    nub' [] _           = []
+    nub' (x:xs) ls                              
+        | x `elem` ls   = nub' xs ls
+        | otherwise     = x : nub' xs (x:ls)
 
 nextCell :: (Int,Int) -> [(Int,Int)] -> (Int,Int)
 nextCell cell previousCells
-  | overpopulation cell previousCells = (1,1)
+  | getNumberOfNeighbours cell previousCells > 3  = (-1,-1) --dead
+  | getNumberOfNeighbours cell previousCells < 2  = (-1,-1) --dead
+  | otherwise                                     = cell
 
-overpopulation :: (Int,Int) -> [(Int,Int)] -> bool
-overpopulation cell oldgeneration = 
--- END
+getNeighbourPositions :: (Int,Int) -> [(Int,Int)]
+getNeighbourPositions cell = do
+  let y = fst cell
+  let x = snd cell
+  [(y-1,x),(y-1,x+1),(y-1,x-1),(y+1,x),(y+1,x-1),(y+1,x+1),(y,x+1),(y,x-1)]
+
+getNumberOfNeighbours :: (Int,Int) -> [(Int,Int)] -> Int
+getNumberOfNeighbours cell cellGeneration = do
+  let neighbourPositions = getNeighbourPositions cell
+  let actualNeigbours = filter (\x -> elem x cellGeneration) neighbourPositions
+  length actualNeigbours
+
+parseFieldList :: [Int] -> Int -> String -> [(Int,Int)] -> [String]
+parseFieldList fieldsList rowSize character coordinates = map(\x -> createField x character rowSize coordinates) fieldsList
+
+playTheGame fieldsList rowSize character coordinates = do
+  let parsed = parseFieldList fieldsList rowSize character coordinates
+  let final = upperBorder rowSize ++ "│ " ++ unwords parsed ++ lowerBorder rowSize
+  putStrLn(final)
+  let nextGen = nextGeneration coordinates
+  line1 <- getLine
+  if (line1 == "x") then putStrLn "Terminated" else playTheGame fieldsList rowSize character nextGen
+
 
 buildMap character fieldSize coordinates = do
   let fields = [1..fieldSize]
   let rowSize = integerSqrtFrom fieldSize
-  let parsed = map(\x -> createField x character rowSize coordinates) fields
-  let final = upperBorder rowSize ++ "│ " ++ unwords parsed ++ lowerBorder rowSize
-  putStrLn(final)
+  -- Play the game!
+  playTheGame fields rowSize character coordinates
