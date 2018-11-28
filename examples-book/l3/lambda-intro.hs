@@ -47,3 +47,36 @@ overwriteV2 x = (\x ->
                 ) 2
                 
                 
+-- rewritten examples from lection 2 with lambdas
+
+
+calcCange = (\owed given ->
+                         if given - owed > 0
+                         then given - owed
+                         else 0)
+
+inc = (\n ->
+        n + 1)
+
+double = (\n ->
+           2 * n)
+        
+square = (\n ->
+           n ^ 2)
+
+func = (\n ->
+         if n `mod` 2 == 0
+         then n - 2
+         else 3 * n + 1)
+         
+
+-- Rewrite the following function using a let expression into nested lambdas
+counter0 x = let x = x + 1
+            in
+                let x = x + 1
+                    in
+                        x
+                
+counter1 x = (\x -> x + 1)
+             ((\x -> x + 1)
+              ((\x -> x) x))
