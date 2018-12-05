@@ -1,14 +1,32 @@
 module Main where
+{-|
+  THIS AN IMPLEMENATION OF CONWAY'S GAME OF LIFE
+-}
 
 main :: IO ()
 main = do
   buildMap "." (20*20) [(2,0),(2,1),(2,2),(1,2),(0,1)]
 
+{-|
+  The 'createField' transforms a number (in this case the index of our fieldList)
+  into a character. It needs the coordinates, to decide, if it is a
+  dead cell "." or a living cell "o". It also cares about adding borders, if the
+  cell is at the edges of the field.
+  'number' is the fieldIndex
+  'character' is what is printed out as a dead cell
+  'rowLength' is the rowLength of the field
+  'coordinates' are the positions of living cells in a 2D map
+-}
 createField :: Int -> String -> Int -> [(Int, Int)] -> String
 createField number character rowLength coordinates
-  | number `mod` rowLength == 0 && number >= rowLength^2   = if(isInCoordinates coordinates number rowLength) then "o" ++ " │\n" else character ++ " │\n"
-  | number `mod` rowLength == 0                            = if(isInCoordinates coordinates number rowLength) then "o" ++ " │\n│" else character ++ " │\n│"
-  | otherwise                                              = if(isInCoordinates coordinates number rowLength) then "o" else character
+  | number `mod` rowLength == 0 && number >= rowLength^2   = cellChar ++ " │\n"
+  | number `mod` rowLength == 0                            = cellChar ++ " │\n│"
+  | otherwise                                              = cellChar
+  where cellChar = getCharacter coordinates number rowLength character
+  -- variables declared in where are visible in the whole function
+  
+getCharacter coordinates number rowLength character = 
+  if(isInCoordinates coordinates number rowLength) then "o" else character
 
 integerSqrtFrom :: Int -> Int
 integerSqrtFrom x = floor . sqrt $ (fromIntegral x :: Float)
@@ -26,45 +44,46 @@ index :: (Int,Int) -> Int -> Int
 index pos rowSize = fst(pos)*rowSize + snd(pos) + 1
 
 isInCoordinates :: [(Int, Int)] -> Int -> Int -> Bool
-isInCoordinates coordinates number rowSize = elem number (map(\ x -> index x rowSize) coordinates)
+isInCoordinates coordinates number rowSize = 
+  elem number (map(\ x -> index x rowSize) coordinates)
 
 nextGeneration :: [(Int,Int)] -> [(Int,Int)]
-nextGeneration oldgeneration = do
-  let survivors = map (\ cell -> nextCell cell oldgeneration ) oldgeneration
-  let babies = getNewBornsOf oldgeneration
-  babies ++ survivors
+nextGeneration oldgeneration = babies ++ survivors
+  where survivors = map (\ cell -> nextCell cell oldgeneration ) oldgeneration;
+		babies = getNewBornsOf oldgeneration
 
-getNewBornsOf oldgeneration = do
-  let babyCanditates = nub (concat (map (\ oldCell -> getNeighbourPositions oldCell) oldgeneration))
+getNewBornsOf oldgeneration = 
   filter (\cand -> getNumberOfNeighbours cand oldgeneration == 3) babyCanditates
+  where babyCanditates = distinct (concat (map (\ oldCell -> getNeighbourPositions oldCell) oldgeneration))
 
-nub l                   = nub' l []
+distinct l              = distinct' l []
   where
-    nub' [] _           = []
-    nub' (x:xs) ls                              
-        | x `elem` ls   = nub' xs ls
-        | otherwise     = x : nub' xs (x:ls)
+    distinct' [] _      = []
+    distinct' (x:xs) ls                              
+        | x `elem` ls   = distinct' xs ls
+        | otherwise     = x : distinct' xs (x:ls)
 
 nextCell :: (Int,Int) -> [(Int,Int)] -> (Int,Int)
 nextCell cell previousCells
-  | getNumberOfNeighbours cell previousCells > 3  = (-1,-1) --dead
-  | getNumberOfNeighbours cell previousCells < 2  = (-1,-1) --dead
-  | otherwise                                     = cell
+  | neighbourCells > 3  = (-1,-1) --dead
+  | neighbourCells < 2  = (-1,-1) --dead
+  | otherwise           = cell
+  where neighbourCells = getNumberOfNeighbours cell previousCells
+  
 
 getNeighbourPositions :: (Int,Int) -> [(Int,Int)]
-getNeighbourPositions cell = do
-  let y = fst cell
-  let x = snd cell
-  [(y-1,x),(y-1,x+1),(y-1,x-1),(y+1,x),(y+1,x-1),(y+1,x+1),(y,x+1),(y,x-1)]
+getNeighbourPositions cell =
+  let y = fst cell; x = snd cell
+  in [(y-1,x),(y-1,x+1),(y-1,x-1),(y+1,x),(y+1,x-1),(y+1,x+1),(y,x+1),(y,x-1)]
 
 getNumberOfNeighbours :: (Int,Int) -> [(Int,Int)] -> Int
-getNumberOfNeighbours cell cellGeneration = do
-  let neighbourPositions = getNeighbourPositions cell
-  let actualNeigbours = filter (\x -> elem x cellGeneration) neighbourPositions
-  length actualNeigbours
+getNumberOfNeighbours cell cellGeneration = length actualNeigbours
+  where neighbourPositions = getNeighbourPositions cell;
+        actualNeigbours = filter (\x -> elem x cellGeneration) neighbourPositions
 
 parseFieldList :: [Int] -> Int -> String -> [(Int,Int)] -> [String]
-parseFieldList fieldsList rowSize character coordinates = map(\x -> createField x character rowSize coordinates) fieldsList
+parseFieldList fieldsList rowSize character coordinates = 
+  map(\x -> createField x character rowSize coordinates) fieldsList
 
 playTheGame fieldsList rowSize character coordinates = do
   let parsed = parseFieldList fieldsList rowSize character coordinates
@@ -72,11 +91,11 @@ playTheGame fieldsList rowSize character coordinates = do
   putStrLn(final)
   let nextGen = nextGeneration coordinates
   line1 <- getLine
-  if (line1 == "x") then putStrLn "Terminated" else playTheGame fieldsList rowSize character nextGen
-
+  case line1 of "x" -> putStrLn "Terminated";
+				_   -> playTheGame fieldsList rowSize character nextGen;
 
 buildMap character fieldSize coordinates = do
   let fields = [1..fieldSize]
   let rowSize = integerSqrtFrom fieldSize
-  -- Play the game!
+  -- Play the game (recursively)!
   playTheGame fields rowSize character coordinates
