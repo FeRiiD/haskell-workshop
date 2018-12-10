@@ -5,7 +5,9 @@ module Main where
 
 main :: IO ()
 main = do
-  buildMap "." (20*20) [(2,0),(2,1),(2,2),(1,2),(0,1)]
+  buildStandardMap [(2,0),(2,1),(2,2),(1,2),(0,1)]
+
+buildStandardMap = startGame "." (20*20)
 
 {-|
   The 'createField' transforms a number (in this case the index of our fieldList)
@@ -23,8 +25,9 @@ createField number character rowLength coordinates
   | number `mod` rowLength == 0                            = cellChar ++ " │\n│"
   | otherwise                                              = cellChar
   where cellChar = getCharacter coordinates number rowLength character
-  -- variables declared in where are visible in the whole function
+  -- variables declared in 'where' are visible in the whole function
   
+getCharacter :: [(Int, Int)] -> Int -> Int -> [Char] -> [Char]
 getCharacter coordinates number rowLength character = 
   if(isInCoordinates coordinates number rowLength) then "o" else character
 
@@ -52,6 +55,7 @@ nextGeneration oldgeneration = babies ++ survivors
   where survivors = map (\ cell -> nextCell cell oldgeneration ) oldgeneration;
 		babies = getNewBornsOf oldgeneration
 
+getNewBornsOf :: [(Int,Int)] -> [(Int,Int)]
 getNewBornsOf oldgeneration = 
   filter (\cand -> getNumberOfNeighbours cand oldgeneration == 3) babyCanditates
   where babyCanditates = distinct (concat (map (\ oldCell -> getNeighbourPositions oldCell) oldgeneration))
@@ -85,17 +89,19 @@ parseFieldList :: [Int] -> Int -> String -> [(Int,Int)] -> [String]
 parseFieldList fieldsList rowSize character coordinates = 
   map(\x -> createField x character rowSize coordinates) fieldsList
 
-playTheGame fieldsList rowSize character coordinates = do
+nextRound :: [Int] -> Int -> String -> [(Int, Int)] -> IO ()
+nextRound fieldsList rowSize character coordinates = do
   let parsed = parseFieldList fieldsList rowSize character coordinates
   let final = upperBorder rowSize ++ "│ " ++ unwords parsed ++ lowerBorder rowSize
   putStrLn(final)
   let nextGen = nextGeneration coordinates
   line1 <- getLine
   case line1 of "x" -> putStrLn "Terminated";
-				_   -> playTheGame fieldsList rowSize character nextGen;
+        _   -> nextRound fieldsList rowSize character nextGen;
 
-buildMap character fieldSize coordinates = do
+startGame :: String -> Int -> [(Int, Int)] -> IO ()
+startGame character fieldSize coordinates = do
   let fields = [1..fieldSize]
   let rowSize = integerSqrtFrom fieldSize
   -- Play the game (recursively)!
-  playTheGame fields rowSize character coordinates
+  nextRound fields rowSize character coordinates
