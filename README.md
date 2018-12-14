@@ -2,7 +2,7 @@
 Haskell Workshop for use at the ESD Module in Informatics course at Fontys Venlo.
 
 ## Preparation
-In order to be actively involved in our workshop we ask you to install the Glasgow Haskell Compiler (ghc) and preferably a [text editor with Haskell support](https://wiki.haskell.org/Editors) in advance.
+In order to be actively involved in our workshop we ask you to install the Glasgow Haskell Compiler (ghc) and preferably a [Haskell-aware text editor](https://wiki.haskell.org/Editors) in advance.
 
 The following sections describe the most common steps to install ghc on different platforms. If you need more assistance you can go to [the official Haskell site](https://www.haskell.org/platform/) or simply ask us directly.
 
