@@ -7,6 +7,10 @@ main :: IO ()
 main = do
   buildStandardMap [(2,0),(2,1),(2,2),(1,2),(0,1)]
 
+{-|
+  Builds map and starts game. Requires a list of coordinates to be executed.
+  The coordinates will be the position of the living cells in a 20*20 map.
+-}
 buildStandardMap = startGame "." (20*20)
 
 {-|
@@ -96,8 +100,9 @@ nextRound fieldsList rowSize character coordinates = do
   putStrLn(final)
   let nextGen = nextGeneration coordinates
   line1 <- getLine
-  case line1 of "x" -> putStrLn "Terminated";
-        _   -> nextRound fieldsList rowSize character nextGen;
+  case line1 of 
+    "x" -> putStrLn "Terminated";
+    _   -> nextRound fieldsList rowSize character nextGen;
 
 startGame :: String -> Int -> [(Int, Int)] -> IO ()
 startGame character fieldSize coordinates = do
