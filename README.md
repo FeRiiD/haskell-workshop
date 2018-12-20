@@ -35,3 +35,8 @@ This section describes how to create a simple "Hello World!" example to make sur
     :l hello.hs
     ```
 4.  Call the method by typing ```hello```. If you can see the message, get yourself some reward (grab a beer or something). We look forward to work with you.
+
+### Some Nice Videos on Haskell
+
+About Infinite datastructures:
+https://www.youtube.com/watch?v=bnRNiE_OVWA
