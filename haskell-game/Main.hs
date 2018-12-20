@@ -50,12 +50,9 @@ horizontalLines amount = [x | x <- (unwords (replicate amount "─")), x /= ' ']
 index :: (Int,Int) -> Int -> Int
 index pos rowSize = fst(pos)*rowSize + snd(pos) + 1
 
-{-|
-  Function to check, whether 'number' occurs in coordinates.
-  You can transform a coordinate (tuple) into a single number using the index function above! 
--}
 isInCoordinates :: [(Int, Int)] -> Int -> Int -> Bool
-isInCoordinates coordinates number rowSize = --TODO Implement method
+isInCoordinates coordinates number rowSize = 
+  elem number (map(\ x -> index x rowSize) coordinates)
 
 nextGeneration :: [(Int,Int)] -> [(Int,Int)]
 nextGeneration oldgeneration = babies ++ survivors
