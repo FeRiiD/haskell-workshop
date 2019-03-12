@@ -1,15 +1,19 @@
-# haskell-workshop
-Haskell Workshop for use at the ESD Module in Informatics course at Fontys Venlo.
+# Haskell Workshop 
+This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo.
+
 ## Preparation
 In order to be actively involved in our workshop we ask you to install the Glasgow Haskell Compiler (ghc) and preferably a [Haskell-aware text editor](https://wiki.haskell.org/Editors) in advance.
+
 ### Install ghc
-The following sections describe the most common steps to install ghc on different platforms. If you need more assistance you can go to [the official Haskell site](https://www.haskell.org/platform/) or simply ask us directly.
+The following sections describe the most common steps to install [ghc](https://wiki.haskell.org/GHC) on different platforms. If you need more assistance you can go to [the official Haskell site](https://www.haskell.org/platform/) or simply ask us directly.
+
 #### Linux
 In all major distributions ghc is included and can be installed using the native package manager.
 For Debian based systems like Ubuntu or Mint this would be:
 ```
 sudo apt-get install ghc
 ```
+
 #### Windows
 Download and install the [core package](https://haskell.org/platform/download/8.4.3/HaskellPlatform-8.4.3-core-x86_64-setup.exe). Afterwards you should be able to invoke ghc from command prompt:
 ```
@@ -35,6 +39,20 @@ This section describes how to create a simple "Hello World!" example to make sur
     :l hello.hs
     ```
 4.  Call the method by typing ```hello```. If you can see the message, get yourself some reward (grab a beer or something). We look forward to work with you.
+
+
+## Assignments
+
+* Do the assignments in /assignments folders.
+* There are in total 6 tasks under assignments.
+    * /task_0
+    * /task_1
+    * /task_2
+    * /task_3
+    * /task_4
+    * /task_5
+* **task_0** to **task_3** are **mandatory**. You _have_ to do these and check your solutions into your git classroom repository. 
+* **task_4** and **task_5** are **optional**
 
 ### Some Nice Videos on Haskell
 
