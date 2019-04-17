@@ -32,7 +32,7 @@ This section describes how to create a simple "Hello World!" example to make sur
     ```
 2.  Open up the interactive complier:
     ```
-    gchi
+    ghci
     ```
 3.  Load the hello.hs file. (Tip: you can use autocompletion just as you do in your shell.)
     ```
