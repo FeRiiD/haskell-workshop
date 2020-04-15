@@ -1,5 +1,5 @@
 # Haskell Workshop 
-This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo in 2018. Thank you very much [Marco Kull]([https://link](https://github.com/MarcoKull)) and [Jan Evers]([https://link](https://github.com/Backend-Giraffe)). 
+This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo in 2018. Thank you very much [Marco Kull](https://github.com/MarcoKull) and [Jan Evers](https://github.com/Backend-Giraffe). 
 
 ## Preparation
 In order to be actively involved in our workshop we ask you to install the Glasgow Haskell Compiler (ghc) and preferably a [Haskell-aware text editor](https://wiki.haskell.org/Editors) in advance.
