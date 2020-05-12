@@ -9,7 +9,6 @@ titlepage: "true"
 logo: "images/fontyslogo.png"
 titlepage-rule-color: "400070"
 ...
-![Create PDF report](https://github.com/FontysVenlo/haskell-workshop/workflows/Create%20PDF%20report/badge.svg)
 ---
 
 # Haskell Workshop - Assignment
