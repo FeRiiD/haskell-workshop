@@ -1,0 +1,17 @@
+name: Create PDF report
+
+on: push
+
+jobs:
+  convert_via_pandoc:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2
+      - run: mkdir output
+      - uses: docker://dalibo/pandocker:latest
+        with: 
+          args: "README.md -o output/01-ppar-haskell-assignment.pdf --toc --pdf-engine=xelatex --template=./eisvogel.latex --listing"
+      - uses: actions/upload-artifact@master
+        with:
+          name: 01-ppar-haskell-assignment.pdf
+          path: output
