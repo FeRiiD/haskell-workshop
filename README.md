@@ -10,7 +10,7 @@ logo: "images/fontyslogo.png"
 titlepage-rule-color: "400070"
 ...
 ---
-
+![Create PDF report](https://github.com/FontysVenlo/haskell-workshop/workflows/Create%20PDF%20report/badge.svg)
 # Haskell Workshop - Assignment
 
 This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo in 2018. Thank you very much [Marco Kull](https://github.com/MarcoKull) and [Jan Evers](https://github.com/Backend-Giraffe).
