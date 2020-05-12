@@ -14,3 +14,14 @@ This Haskell Workshop is based on the the haskell workshop from two students who
   - [assignments/task_5](assignments/task_5)
 - **task_0** to **task_4** are **mandatory**. You _have_ to do these and check your solutions into your github classroom repository - so this repository.
 - **task_5** is **optional**
+
+## Links
+
+This repository can be found in github under:
+
+- [FontysVenlo/haskell-workshop: Haskell Workshop - for use in Programming Paradigms course at Fontys Venlo](https://github.com/FontysVenlo/haskell-workshop)
+
+The course introduction and additional material can be found in github under: 
+
+- [FontysVenlo/haskell-introduction: Haskell Introduction course](https://github.com/FontysVenlo/haskell-introduction)
+  
