@@ -1,6 +1,5 @@
-# Haskell Workshop
-
-This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo in 2018. Thank you very much [Marco Kull]([https://link](https://github.com/MarcoKull)) and [Jan Evers]([https://link](https://github.com/Backend-Giraffe)).
+# Haskell Workshop 
+This Haskell Workshop is based on the the haskell workshop from two students who prepared it for the ESD course in Informatics study programme at Fontys Venlo in 2018. Thank you very much [Marco Kull](https://github.com/MarcoKull) and [Jan Evers](https://github.com/Backend-Giraffe). 
 
 ## Assignment 1
 
