@@ -5,7 +5,7 @@ data Expr = Val Int | Div Expr Expr
 eval :: Expr -> Int
 
 
--- write a evaluation function for both Expr types
+-- write an evaluation function for both Expr types
 -- TODO eval (Val n) =
 
 -- TODO eval (Div x y) =

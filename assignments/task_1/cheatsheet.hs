@@ -16,7 +16,6 @@
     x7 = product [1,2,3]                            -- 6
     
     x8 = length x1                                  -- 3
-    
 
     ---------- lists by comprehension
 
@@ -25,7 +24,6 @@
     x10 = [ sum [1..x] | x <- x3 ]                  -- [6, 15, 28, 45]
 
     x11 = [ x | x <- [1,2,3,4,5,6], mod x 2 == 1 ]  -- [1, 3, 5]
-
 
     ---------- infinite lists
 
