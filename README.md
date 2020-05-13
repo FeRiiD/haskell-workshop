@@ -8,6 +8,7 @@ lang: "en"
 titlepage: "true"
 logo: "images/fontyslogo.png"
 titlepage-rule-color: "400070"
+titlepage-rule-height: 80
 ...
 ---
 
@@ -27,6 +28,10 @@ This Haskell Workshop is based on the the haskell workshop from two students who
   - [assignments/task_5](assignments/task_5)
 - **task_0** to **task_4** are **mandatory**. You _have_ to do these and check your solutions into your github classroom repository - so this repository.
 - **task_5** is **optional**
+
+### Deadline
+
+- 27th May 2020 - EOD
 
 ## Links
 
